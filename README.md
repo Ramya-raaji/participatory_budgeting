@@ -1,1 +1,1 @@
-# voting_system
+# participatory_budgeting
