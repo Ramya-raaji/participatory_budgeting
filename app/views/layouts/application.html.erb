@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Participatory Budgeting</title>
+    <%= csrf_meta_tags %>
+    <%= csp_meta_tag %>
+    <%= javascript_include_tag 'application', 'data-turbo-track': 'reload' %>
+    <%= stylesheet_link_tag 'application', 'data-turbo-track': 'reload' %>
+  </head>
+  <body>
+    <nav>
+      <%= link_to "Home", home_path %>
+      <% if user_signed_in? %>
+      <%= button_to "Logout", destroy_user_session_path, method: :delete %>
+        <% if current_user.admin? %>
+          <%= link_to "Admin Report", admin_report_path %>
+        <% end %>
+      <% else %>
+        <%= link_to "Sign up", new_user_registration_path %> |
+        <%= link_to "Login", new_user_session_path %>
+      <% end %>
+    </nav>
+    <hr>
+    <% flash.each do |k, v| %>
+      <div class="flash <%= k %>"><%= v %></div>
+    <% end %>
+    <%= yield %>
+  </body>
+</html>

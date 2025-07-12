@@ -1,0 +1,53 @@
+<h1>Allocate Your $1,000 Budget</h1>
+<%= form_with url: allocations_path, method: :post, local: true, id: "allocation-form" do %>
+  <table>
+    <tr>
+      <th>Project</th>
+      <th>Allocate ($)</th>
+    </tr>
+    <% @projects.each do |project| %>
+      <tr>
+        <td><%= project.name %></td>
+        <td>
+          <%= number_field_tag "allocations[#{project.id}]", @allocations[project.id]&.amount || 0, min: 0, max: 1000, class: "allocation-input", data: { action: "input->allocation#update" } %>
+        </td>
+      </tr>
+    <% end %>
+  </table>
+  <p>
+    <strong>Allocated:</strong> $<span id="allocated-amount">0</span> /
+    <strong>Remaining:</strong> $<span id="remaining-amount">1000</span>
+  </p>
+  <%= submit_tag "Submit Allocations" %>
+<% end %>
+
+<script>
+  document.addEventListener("DOMContentLoaded", function() {
+    const inputs = document.querySelectorAll('.allocation-input');
+    const allocatedSpan = document.getElementById('allocated-amount');
+    const remainingSpan = document.getElementById('remaining-amount');
+    const budget = 1000;
+
+    function updateTotals() {
+      let total = 0;
+      inputs.forEach(input => {
+        total += parseInt(input.value) || 0;
+      });
+      allocatedSpan.textContent = total;
+      remainingSpan.textContent = budget - total;
+      if (total > budget) {
+        allocatedSpan.style.color = 'red';
+        remainingSpan.style.color = 'red';
+      } else {
+        allocatedSpan.style.color = '';
+        remainingSpan.style.color = '';
+      }
+    }
+
+    inputs.forEach(input => {
+      input.addEventListener('input', updateTotals);
+    });
+
+    updateTotals();
+  });
+</script>

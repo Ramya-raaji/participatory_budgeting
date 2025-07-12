@@ -1,0 +1,14 @@
+<h1>Community Projects</h1>
+<table>
+  <tr>
+    <th>Name</th>
+    <th>Cost</th>
+  </tr>
+  <% @projects.each do |project| %>
+    <tr>
+      <td><%= project.name %></td>
+      <td>$<%= project.cost %></td>
+    </tr>
+  <% end %>
+</table>
+<%= link_to "Allocate My Budget", new_allocation_path %>

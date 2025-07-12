@@ -1,0 +1,16 @@
+<h1>Allocation Confirmation</h1>
+<p>Thank you for submitting your allocations! Here’s a summary:</p>
+<table>
+  <tr>
+    <th>Project</th>
+    <th>Allocated Amount</th>
+  </tr>
+  <% @allocations.each do |allocation| %>
+    <tr>
+      <td><%= allocation.project.name %></td>
+      <td>$<%= allocation.amount %></td>
+    </tr>
+  <% end %>
+</table>
+<p><strong>Total Allocated:</strong> $<%= @total %></p>
+<%= link_to "Back to Projects", projects_path %>
