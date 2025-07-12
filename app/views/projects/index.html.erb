@@ -11,4 +11,7 @@
     </tr>
   <% end %>
 </table>
-<%= link_to "Allocate My Budget", new_allocation_path %>
+<% unless current_user.admin? %>
+  <%= link_to "Allocate My Budget", new_allocation_path %>
+<% end %>
+

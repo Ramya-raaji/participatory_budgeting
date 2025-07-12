@@ -16,3 +16,4 @@ Project.create!([
 
 # Optionally, create an admin user
 User.create!(email: "admin@example.com", password: "password", admin: true)
+User.create!(email: "resident@example.com", password: "password", admin: false)

@@ -1,6 +1,7 @@
 # app/controllers/allocations_controller.rb
 class AllocationsController < ApplicationController
   before_action :authenticate_user!
+  before_action :prevent_admin_allocation
 
   def new
     @projects = Project.all
@@ -38,5 +39,13 @@ class AllocationsController < ApplicationController
   def show
     @allocations = current_user.allocations.includes(:project)
     @total = @allocations.sum(:amount)
+  end
+
+  private
+
+  def prevent_admin_allocation
+    if current_user.admin?
+      redirect_to root_path, alert: "Admins cannot allocate budget to projects."
+    end
   end
 end

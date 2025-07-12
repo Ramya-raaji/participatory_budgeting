@@ -1,15 +1,19 @@
 <h1>Admin Allocation Report</h1>
 <table>
-  <tr>
-    <th>Project</th>
-    <th>Required Funding</th>
-    <th>Total Allocated</th>
-  </tr>
-  <% @projects.each do |project| %>
+  <thead>
     <tr>
-      <td><%= project.name %></td>
-      <td>$<%= project.cost %></td>
-      <td>$<%= project.total_funded %></td>
+      <th>Project</th>
+      <th>Required Funding</th>
+      <th>Total Allocated by Residents</th>
     </tr>
-  <% end %>
+  </thead>
+  <tbody>
+    <% @projects.each do |project| %>
+      <tr>
+        <td><%= project.name %></td>
+        <td>$<%= number_with_delimiter(project.cost) %></td>
+        <td>$<%= number_with_delimiter(project.allocations.sum(:amount)) %></td>
+      </tr>
+    <% end %>
+  </tbody>
 </table>
